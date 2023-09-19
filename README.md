@@ -52,7 +52,7 @@ We'd love to hear from you! Feel free to open an issue about a new use case or [
   - Execute Actions using either WASM or containers
 - Signed decision chains skip the guesswork on why an Action was taken
   - Audit logs satisfy compliance requirements
-  - Budgets allow LLM-backed applications to deliver high quality UX with scalable costs
+- Budgets allow LLM-backed applications to deliver high quality UX with scalable costs
 
 ## Frequently Asked Questions
 
