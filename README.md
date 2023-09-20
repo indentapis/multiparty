@@ -118,6 +118,47 @@ class HumanApprovalCallbackHandler(BaseCallbackHandler):
 </details>
 
 <details>
+  <summary><b>How are prompts entered by users handled?</b></summary>
+
+
+**Prompt**
+```
+When does Taylor's last meeting end today?
+```
+
+
+**Tool function**
+```javascript
+async function getMeetingTimes(range = 'today', view = ['time']) {
+  await multiparty.enforce('get_calendar')
+
+  const { meetings } = await calendar.getEvents(range)
+  return meetings.map(event => {
+    const { metadata, time } = await multiparty.enforce('get_calendar_event', {
+      event,
+      view
+        })
+    return { ...metadata, ...time }
+  })
+  return 
+}
+```
+
+**Rules**
+```javascript
+// Time
+view.contains('time') && getFields(event, ['startTime', 'endTime'])
+
+// Attendees
+view.contains('attendees') && getFields(event, ['organizer', 'attendees'])
+
+// Metadata
+getFields(event, ['id', 'etag'])
+```
+  
+</details>
+
+<details>
   <summary><b>How does this compare to existing rule engines?</b></summary>
 
 <br />
