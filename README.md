@@ -166,7 +166,7 @@ getFields(event, ['id', 'etag'])
 **Rules** 
 
 The Common Expression Language (CEL) is a non-Turing complete language designed
-for simplicity, speed, safety, and portability. CEL's C-like [syntax][1] looks
+for simplicity, speed, safety, and portability. CEL's C-like syntax looks
 nearly identical to equivalent expressions in C++, Go, Java, and TypeScript.
 
 ```java
