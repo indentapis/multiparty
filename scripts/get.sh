@@ -104,7 +104,7 @@ function check() {
       printf "Checksum not found for ${target}.\nChecksum: ${checksum}\n"
       read -p "Do you want to add it? (Y/n) " response
       case ${response} in
-        [nN]|[nN][oO]) return false ;;
+        [nN]|[nN][oO]) return 3 ;;
       esac
     else
       return 2
