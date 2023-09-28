@@ -1,0 +1,12 @@
+version: v1beta1
+
+build:
+  roots:
+    - api
+    - _proto/googleapis
+lint:
+  use:
+    - DEFAULT
+  ignore:
+    - google
+    - grafeas

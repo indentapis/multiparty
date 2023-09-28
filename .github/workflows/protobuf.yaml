@@ -1,0 +1,28 @@
+name: protobuf
+on:
+  pull_request:
+    paths:
+      - "api/**"
+      - ".github/protobuf.yaml"
+  push:
+    paths:
+      - "api/**"
+      - ".github/protobuf.yaml"
+jobs:
+  protogen:
+    name: protogen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+      - name: Run protogen
+        run: make proto
+      - name: Check Protobuf descriptor generation
+        run: |
+          ./scripts/check-change.sh \
+              api/multiparty/v1/v1.descriptor.pb
+      - name: Check Go codegen
+        run: |
+          ./scripts/check-change.sh \
+              api/multiparty/v1/*.pb.go
