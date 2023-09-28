@@ -5,6 +5,8 @@ on:
       - "api/**"
       - ".github/protobuf.yaml"
   push:
+    branches:
+      - main
     paths:
       - "api/**"
       - ".github/protobuf.yaml"

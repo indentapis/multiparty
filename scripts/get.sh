@@ -107,7 +107,7 @@ function check() {
         [nN]|[nN][oO]) return false ;;
       esac
     else
-      return false
+      return 2
     fi
 
     echo "Adding checksum: ${checksum}"
