@@ -1,0 +1,71 @@
+// Copyright 2023 Indent Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package multiparty.v1;
+
+option csharp_namespace = "Multiparty.V1";
+option go_package = "multiparty/v1;multipartyv1";
+option java_multiple_files = true;
+option java_outer_classname = "RuleProto";
+option java_package = "ai.multiparty.v1";
+option objc_class_prefix = "MPT";
+option php_namespace = "Multiparty\\V1";
+option ruby_package = "Multiparty::V1";
+
+import "google/api/expr/v1alpha1/checked.proto";
+
+message Rule {
+  // On sets when Rules apply.
+  On on = 1;
+
+  // Require defines what's needed to satisfy a Rule.
+  repeated Requirement require = 2;
+}
+
+// On determines when a Rule is applied.
+message On {
+  // Events the Rule applies to.
+  repeated string events = 1;
+
+  // Match must be subset of event labels for Rule to apply.
+  map<string, string> match = 2;
+}
+
+// Requirement to satisfying a Rule.
+message Requirement {
+  // Ensure specifies what meets the Requirement.
+  string ensure = 1;
+
+  // Title is a human readable name for the Requirement.
+  string title = 2;
+
+  // Description of the purpose of Rule.
+  string description = 3;
+
+  // Origin is the location of the Requirement.
+  Origin origin = 4;
+
+  // Compiled version of Ensure set by Multiparty.
+  google.api.expr.v1alpha1.CheckedExpr compiled = 5;
+}
+
+// Origin is the location of a Requirement's source.
+message Origin {
+  // Path to the source.
+  string path = 1;
+  // Line number of the source.
+  uint32 line = 2;
+}
