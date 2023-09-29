@@ -3,13 +3,13 @@ on:
   pull_request:
     paths:
       - "api/**"
-      - ".github/protobuf.yaml"
+      - ".github/workflows/protobuf.yaml"
   push:
     branches:
       - main
     paths:
       - "api/**"
-      - ".github/protobuf.yaml"
+      - ".github/workflows/protobuf.yaml"
 jobs:
   protogen:
     name: protogen
