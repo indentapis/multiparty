@@ -1,0 +1,142 @@
+// Copyright 2023 Indent Inc
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package indent.jsonschema.draft07;
+
+option csharp_namespace = "Indent.Exec.v1";
+option go_package = "indent/exec/v1;execv1pb";
+option java_multiple_files = true;
+option java_outer_classname = "ExecProto";
+option java_package = "com.indent.exec.v1";
+option objc_class_prefix = "IJD";
+option php_namespace = "Indent\\Exec\\v1";
+
+import "google/protobuf/struct.proto";
+import "google/rpc/status.proto";
+
+
+message Executable {
+  oneof ImageBody {
+    string image_path = 1;
+    string image_body = 2;
+  }
+  // TODO: this could reasonably be a more complex semver type
+  string version = 3;
+}
+
+//message Action {
+//  Executable executable = 1;
+//}
+
+enum OpType {
+  add = 0;
+  remove = 1;
+  replace = 2;
+  copy = 3;
+  test = 4;
+}
+
+message JsonPatch {
+  OpType op = 1;
+  string path = 2;
+  google.protobuf.Value value = 3;
+  string from = 4;
+}
+
+message Event {
+  string patch_id = 1;
+//  oneof EventBody {
+    // TODO: other event types that aren't patch directives will defined here
+    string exec_message = 2;
+//  }
+}
+
+//message Result {
+//  JsonPatch patch = 3;
+//  Event events = 1;
+//  google.rpc.Status status = 2; // TODO: status should probably be a complex type
+//}
+
+//message Invocation {
+//  Action action = 1;
+//  repeated Event input_events = 2;
+//  repeated Result output_results = 3;
+//};
+
+// #######
+
+message SetupRequest {
+  Executable exec = 1;
+} // send setup call
+
+message SetupResponse {
+  google.rpc.Status status = 1;
+//  repeated Type supported_types = 2;
+  // TODO: return reported compatible types
+} // executable is ready
+
+ // TODO: this should be replaced with a reference for the client to consume
+message Credential {
+  string api_key = 1;
+}
+
+message CredentialResponse {}
+
+/* execution request types */
+// for Decisions
+message Query {
+  string id = 1;
+  string input = 2;
+}
+
+// for Actions
+message Action {
+  string id = 1;
+  JsonPatch patch = 2;
+}
+
+/* execution response types */
+message QueryResponse {
+  // status should include whether a given query is retryable (ex: temporary network failure) 
+  google.rpc.Status status = 1;
+  string id = 2;
+  string results = 3;
+}
+
+message ActionResponse {
+  // status should include whether a given action is retryable (ex: temporary network failure
+  google.rpc.Status status = 1;
+  string action_id = 2;
+  repeated google.protobuf.Value results = 3;
+}
+
+message EmitDiagnostic {
+  google.rpc.Status status = 1;
+  string request_id = 2;
+  // Event = 3;
+}
+
+message EmitLog {
+  string request_id = 1;
+  string log = 2;
+}
+
+
+message CloseRequest {}
+message CloseResponse {}
+
+// Exec layer queries the executable for its supported schemas for all kinds
+// Exec layer shortcircuit returns Response.Status = error invalid on any incoming request that doesn't match schema
