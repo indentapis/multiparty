@@ -4,4 +4,4 @@ plugins:
   - plugin: go
     opt:
       - paths=source_relative
-    out: api
+    out: .

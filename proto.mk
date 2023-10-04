@@ -1,15 +1,24 @@
-GET="./scripts/get.sh"
+.PHONY: proto
 
-PROTO=_proto
-BUF := PATH=$(PROTO):$(PROTO)/protoc/bin:$$PATH $(PROTO)/buf
+API=api
+PROTO=api/_proto
+GET=./scripts/get.sh
+BUF := cd $(API) && PATH=$(notdir $(PROTO)):$(notdir $(PROTO))/protoc/bin:$$PATH buf
 
-proto: api/multiparty/v1/buf.gen.yaml \
+PKGS := \
+	multiparty/v1
+
+proto: $(PKGS)
+
+$(PKGS): proto-deps
+	$(BUF) generate --path $@ --template $@/buf.gen.yaml
+	$(BUF) build . --path $@ --as-file-descriptor-set -o $@/$(notdir $@).descriptor.pb
+
+proto-deps: \
  $(PROTO)/buf \
  $(PROTO)/googleapis \
  $(PROTO)/protoc/bin/protoc \
  $(PROTO)/protoc-gen-go
-	$(BUF) generate --path api/multiparty/v1 --template $<
-	$(BUF) build . --path api/multiparty/v1 --as-file-descriptor-set -o api/multiparty/v1/v1.descriptor.pb
 
 $(PROTO)/buf:
 	@$(GET) buf
