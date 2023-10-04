@@ -16,8 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: 'true'
       - name: Run protogen
         run: make proto
       - name: Check Protobuf descriptor generation
