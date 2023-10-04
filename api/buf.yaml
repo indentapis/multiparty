@@ -1,0 +1,13 @@
+version: v1
+name: buf.build/indent/multiparty
+
+deps:
+  - buf.build/googleapis/googleapis:28151c0d0a1641bf938a7672c500e01d
+
+breaking:
+  use:
+    - FILE
+
+lint:
+  use:
+    - DEFAULT

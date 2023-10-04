@@ -20,7 +20,7 @@
 set -euo pipefail
 
 SUMS="$(dirname "$(readlink -f "$0")")/get.sha256"
-OUTDIR="$(dirname "$(readlink -f "$0")")/../_proto"
+OUTDIR="$(dirname "$(readlink -f "$0")")/../api/_proto"
 
 # write to temp file and cleanup later
 tmpDir="$(mktemp -d)"
