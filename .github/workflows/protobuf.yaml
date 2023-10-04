@@ -1,15 +1,9 @@
 name: protobuf
 on:
   pull_request:
-    paths:
-      - "api/**"
-      - ".github/workflows/protobuf.yaml"
   push:
     branches:
       - main
-    paths:
-      - "api/**"
-      - ".github/workflows/protobuf.yaml"
 jobs:
   protogen:
     name: protogen
