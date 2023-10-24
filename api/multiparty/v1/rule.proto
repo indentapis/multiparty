@@ -16,17 +16,49 @@ syntax = "proto3";
 
 package multiparty.v1;
 
-option csharp_namespace = "Multiparty.V1";
-option go_package = "multiparty/v1;multipartyv1";
-option java_multiple_files = true;
-option java_outer_classname = "RuleProto";
-option java_package = "ai.multiparty.v1";
-option objc_class_prefix = "MPT";
-option php_namespace = "Multiparty\\V1";
-option ruby_package = "Multiparty::V1";
-
+import "google/api/annotations.proto";
 import "google/api/expr/v1alpha1/checked.proto";
+import "google/protobuf/empty.proto";
 
+// Services
+
+// Config allows for [Rules][multiparty.v1.Rule] to be created, updated, retrieved, and deleted.
+service Config {
+  // Creates new [Rule][multiparty.v1.Rule] in the given space.
+  rpc CreateRule(CreateRuleRequest) returns (Rule) {
+    option (google.api.http) = {
+      post: "/v1/{space}/rules"
+      body: "rule"
+    };
+  }
+
+  // Updates an existing [Rule][multiparty.v1.Rule].
+  rpc UpdateRule(UpdateRuleRequest) returns (Rule) {
+    option (google.api.http) = {
+      patch: "/v1/{space}/rules/{rule_name}"
+      body: "rule"
+    };
+  }
+
+  // Get a [Rule][multiparty.v1.Rule] by name.
+  rpc GetRule(GetRuleRequest) returns (Rule) {
+    option (google.api.http) = {get: "/v1/{space}/rules/{rule_name}"};
+  }
+
+  // List [Rules][multiparty.v1.Rule] in a space.
+  rpc ListRules(ListRulesRequest) returns (ListRulesResponse) {
+    option (google.api.http) = {get: "/v1/{space}/rules"};
+  }
+
+  // Delete a [Rule][multiparty.v1.Rule] by name.
+  rpc DeleteRule(DeleteRuleRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/{space}/rules/{rule_name}"};
+  }
+}
+
+// Types
+
+// Rule defines a set of Requirements that must be met.
 message Rule {
   // On sets when Rules apply.
   On on = 1;
@@ -68,4 +100,57 @@ message Origin {
   string path = 1;
   // Line number of the source.
   uint32 line = 2;
+}
+
+// Requests
+
+// CreateRuleRequest is the request to create a Rule.
+message CreateRuleRequest {
+  // Space to create the Rule in.
+  string space = 1;
+
+  // Rule to create.
+  Rule rule = 2;
+}
+
+// UpdateRuleRequest is the request to update a Rule.
+message UpdateRuleRequest {
+  // Space to update Rule.
+  string space = 1;
+
+  // Name of Rule to update.
+  string rule_name = 2;
+
+  // Rule to update.
+  Rule rule = 3;
+}
+
+// GetRuleRequest is the request to get a Rule.
+message GetRuleRequest {
+  // Space to get Rule from.
+  string space = 1;
+
+  // Name of Rule to get.
+  string rule_name = 2;
+}
+
+// ListRulesRequest is the request to list Rules.
+message ListRulesRequest {
+  // Space to list Rules from.
+  string space = 1;
+}
+
+// ListRulesResponse is the response to list Rules.
+message ListRulesResponse {
+  // Rules in the space.
+  repeated Rule rules = 1;
+}
+
+// DeleteRuleRequest is the request to delete a Rule.
+message DeleteRuleRequest {
+  // Space to delete Rule from.
+  string space = 1;
+
+  // Name of Rule to delete.
+  string rule_name = 2;
 }

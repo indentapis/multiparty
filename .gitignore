@@ -1,2 +1,6 @@
-api/_proto/**
+# IDEs
 .idea/**
+
+# Proto
+api/_proto/**
+**.descriptor.pb

@@ -1,7 +1,18 @@
 version: v1
 
+managed:
+  enabled: true
+  go_package_prefix:
+    default: multiparty.ai/api/multiparty/v1
+    except:
+      - buf.build/googleapis/googleapis
+
 plugins:
-  - plugin: go
+  - plugin: buf.build/grpc/go:v1.3.0
+    out: .
     opt:
       - paths=source_relative
+  - plugin: go
     out: .
+    opt:
+      - paths=source_relative
