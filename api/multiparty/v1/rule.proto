@@ -18,12 +18,14 @@ package multiparty.v1;
 
 import "google/api/annotations.proto";
 import "google/api/expr/v1alpha1/checked.proto";
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
 
 // Services
 
-// Config allows for [Rules][multiparty.v1.Rule] to be created, updated, retrieved, and deleted.
-service Config {
+// Rules allows for [Rules][multiparty.v1.Rule] to be created, updated, retrieved, and deleted.
+service Rules {
   // Creates new [Rule][multiparty.v1.Rule] in the given space.
   rpc CreateRule(CreateRuleRequest) returns (Rule) {
     option (google.api.http) = {
@@ -58,28 +60,48 @@ service Config {
 
 // Types
 
-// Rule defines a set of Requirements that must be met.
+// Config defines the behavior of Multiparty.
+message Config {
+  // Rules specify how Multiparty responds to events.
+  repeated Rule rules = 1;
+}
+
+// Rule constrains Multiparty to specific behaviors.
 message Rule {
-  // On sets when Rules apply.
-  On on = 1;
+  // Name of the Rule.
+  string name = 1;
 
-  // Require defines what's needed to satisfy a Rule.
-  repeated Requirement require = 2;
+  // Description of the purpose of Rule.
+  string description = 2;
+
+  // If contains a CEL expression that must evaluate to true for the Rule to be applied.
+  string if = 4;
+
+  // Outcome is the result of the Rule.
+  Outcome outcome = 5;
 }
 
-// On determines when a Rule is applied.
-message On {
-  // Events the Rule applies to.
-  repeated string events = 1;
-
-  // Match must be subset of event labels for Rule to apply.
-  map<string, string> match = 2;
+// Outcome is the result of a Rule.
+message Outcome {
+  repeated google.protobuf.Value events = 1;
 }
 
-// Requirement to satisfying a Rule.
-message Requirement {
-  // Ensure specifies what meets the Requirement.
-  string ensure = 1;
+// Test defines a set of checks to verify the behavior of a Rule.
+message Test {
+  // Name of the Test.
+  string name = 1;
+
+  // In is the input used to validate the behavior of a Rule.
+  google.protobuf.Value in = 2;
+
+  // Checks verify the behavior of a Rule.
+  repeated Check checks = 3;
+}
+
+// Check verifies the behavior of a Rule.
+message Check {
+  // If contains a CEL expression that must evaluate to true for the Check to pass.
+  string if = 1;
 
   // Title is a human readable name for the Requirement.
   string title = 2;
@@ -103,6 +125,39 @@ message Origin {
 }
 
 // Requests
+
+// EvalRequest is the request to evaluate policies.
+message EvalRequest {
+  // Config is the configuration to evaluate.
+  Config config = 1;
+
+  // Tests verifies the behavior of a Rule.
+  repeated Test tests = 2;
+}
+
+// EvalResponse is the response to evaluate policies.
+message EvalResponse {
+  // Results of the evaluation.
+  repeated Result results = 1;
+}
+
+// Result is the result of evaluating a policy.
+message Result {
+  // Rules that applied to the evaluation.
+  repeated Rule rules = 1;
+  // Outcome of the evaluation.
+  repeated Outcome events = 2;
+  // Failures encountered during evaluation.
+  repeated Failure failures = 3;
+}
+
+// Failure is a failure encountered during evaluation.
+message Failure {
+  // Check that failed.
+  Check check = 1;
+  // Error encountered.
+  string error = 2;
+}
 
 // CreateRuleRequest is the request to create a Rule.
 message CreateRuleRequest {

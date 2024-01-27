@@ -1,0 +1,59 @@
+config:
+  rules:
+    - name: auto-approve
+      if: |
+        has(actor.labels.roles) &&
+          actor.labels.roles == "admin" || 
+          actor.labels.roles == "on-call"
+      outcome:
+        events:
+        - event: access/approve
+          duration: 6h
+    - name: require-eng-production
+      if: |
+        resource.labels.env == "production" &&
+          (!has(actor.labels.roles) || 
+            actor.labels.roles != "on-call" &&
+            actor.labels.roles != "admin")
+      outcome:
+        events:
+        - event: require/approval
+          reviewers:
+            - team: eng
+          options:
+            - dur: 1h
+            - dur: 3h
+            - dur: 6h
+            - dur: 12h
+
+tests:
+- name: PASS on-call
+  in:
+    actor:
+      labels:
+        roles: on-call
+    resource:
+      labels:
+        env: production
+  checks:
+  - if: out.events[0].event == "access/approve"
+- name: PASS on-call
+  in:
+    actor:
+      labels:
+        roles: admin
+    resource:
+      labels:
+        env: production
+  checks:
+  - if: out.events[0].event == "access/approve"
+- name: FAIL not on-call
+  in:
+    actor:
+      labels:
+        roles:
+    resource:
+      labels:
+        env: production
+  checks:
+    - if: out.events[0].event == "require/approval"
