@@ -1,0 +1,50 @@
+config:
+  rules:
+    - if: default
+      outcome:
+        events:
+          - event: require/approval
+            reviewers:
+              - team: admins
+    - name: auto-approve admins, if not breakglass
+      if: |
+        actor.labels.github_admin == "true" &&
+          resource.labels.breakglass != "true"
+      outcome:
+        events:
+        - event: access/approve
+          dur: 6h
+    - name: breakglass
+      if: resource.labels.breakglass == "true"
+      outcome:
+        events:
+        - event: require/approval
+          reviewers:
+            - team: eng
+        - event: require/breakglass
+          options:
+            - dur: 6h
+            - dur: 12h
+
+tests:
+- name: PASS admin
+  in:
+    actor:
+      labels:
+        github_admin: "true"
+    resource:
+      labels:
+        breakglass: "false"
+  checks:
+  - if: out.events[0].event == "access/approve"
+- name: FAIL not admin, allow breakglass
+  in:
+    actor:
+      labels:
+        github_admin: "false"
+    resource:
+      labels:
+        breakglass: "true"
+  checks:
+    - if: out.events[0].event == "require/approval"
+    - if: out.events[1].event == "require/breakglass"

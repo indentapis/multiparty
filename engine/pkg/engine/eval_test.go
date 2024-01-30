@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"bytes"
@@ -18,11 +18,12 @@ func TestPolicy(t *testing.T) {
 	}
 
 	for _, file := range files {
-		t.Run(file.Name(), func(t *testing.T) {
+		fileName := file.Name()
+		t.Run(fileName, func(t *testing.T) {
 			t.Parallel()
 
 			resp := new(multipartyv1.EvalResponse)
-			data, err := os.ReadFile("testdata/" + file.Name())
+			data, err := os.ReadFile("testdata/" + fileName)
 			if err != nil {
 				t.Fatal(err)
 			} else if out, err := Eval(data); err != nil {

@@ -8,7 +8,7 @@ config:
       outcome:
         events:
         - event: access/approve
-          duration: 6h
+          dur: 6h
     - name: require-eng-production
       if: |
         resource.labels.env == "production" &&

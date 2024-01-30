@@ -1,4 +1,4 @@
-package main
+package engine
 
 import (
 	"bytes"
@@ -69,8 +69,10 @@ func eval(cfg *multipartyv1.Config, test *multipartyv1.Test) (*multipartyv1.Resu
 		if prg, err := setupCEL(rule.GetIf()); err != nil {
 			return nil, fmt.Errorf("rule %d (%q) failed to compile: %w", i, rule.GetIf(), err)
 		} else if out, _, err := prg.Eval(map[string]interface{}{
-			"actor":    actor,
-			"resource": resource,
+			"actor":       actor,
+			"resource":    resource,
+			"transaction": map[string]interface{}{},
+			"default":     false,
 		}); err != nil {
 			return nil, fmt.Errorf("rule %d (%q) failed to evaluate: %w", i, rule.GetIf(), err)
 		} else if pass, ok := out.Value().(bool); !ok {
@@ -116,6 +118,7 @@ func setupCEL(txt string) (cel.Program, error) {
 		cel.Declarations(
 			decls.NewVar("resource", resourceType),
 			decls.NewVar("actor", resourceType),
+			decls.NewVar("default", decls.Bool),
 		),
 		cel.Macros(cel.StandardMacros...),
 	)
