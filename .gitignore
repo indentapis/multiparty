@@ -1,6 +1,14 @@
+# Ignore
+.next
+.DS_Store
+node_modules
+
 # IDEs
 .idea/**
 
 # Proto
 api/_proto/**
 **.descriptor.pb
+
+# WASM Output
+/static
