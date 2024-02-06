@@ -1,11 +1,5 @@
 config:
   rules:
-    - if: default
-      outcome:
-        events:
-          - event: require/approval
-            reviewers:
-              - team: admins
     - name: auto-approve admins, if not breakglass
       if: |
         actor.labels.github_admin == "true" &&

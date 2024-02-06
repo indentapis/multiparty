@@ -6,7 +6,7 @@ import (
 	"errors"
 	"syscall/js"
 
-	"multiparty.ai/engine/pkg/engine"
+	"multiparty.ai/pkg/engine"
 )
 
 func main() {
