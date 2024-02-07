@@ -1,2 +1,23 @@
-api/_proto/**
+# Ignore
+.next
+.DS_Store
+node_modules
+
+# IDEs
 .idea/**
+
+# Proto
+api/_proto/**
+
+# Proto (usually ignore generated files, except descriptors)
+# 
+# **.descriptor.pb
+
+# NPM
+packages/**/dist
+packages/**/out
+packages/**/wasm
+packages/**/go
+
+# WASM Output
+/static

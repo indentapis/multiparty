@@ -1,0 +1,104 @@
+config:
+  rules:
+    - name: auto_approve_small_transactions
+      if: |
+        resource.labels.transaction_size == "small" &&
+        actor.labels.model == "GPT-4"
+      outcome:
+        events:
+          - event: transaction/approve
+
+    - name: review_large_transactions
+      if: |
+        resource.labels.emergency != "true" &&
+        resource.labels.transaction_size == "large" &&
+        actor.labels.model == "GPT-4"
+      outcome:
+        events:
+          - event: require/approval
+            reviewers:
+              - team: finance
+
+    - name: self_review
+      if: |
+        resource.labels.transaction_size == "small" &&
+        actor.labels.model != "GPT-4"
+      outcome:
+        events:
+          - event: require/approval
+            reviewers:
+              - model: GPT-4
+
+    - name: emergency_override
+      if: |
+        actor.labels.model == "GPT-4" &&
+        resource.labels.emergency == "true" &&
+        resource.labels.transaction_size != "over_limit"
+      outcome:
+        events:
+          - event: transaction/approve
+          - event: notify/supervisor
+            entitlements:
+              - realtime
+
+    - name: deny_over_limit
+      if: |
+        resource.labels.transaction_size == "over_limit"
+          || (
+            resource.labels.transaction_size != "small" &&
+            actor.labels.model != "GPT-4"
+          )
+      outcome:
+        events:
+          - event: transaction/deny
+          - event: notify/supervisor
+
+tests:
+  - name: PASS_small_transaction_by_GPT-4
+    in:
+      resource:
+        labels:
+          transaction_size: small
+          emergency: "false"
+      actor:
+        labels:
+          model: "GPT-4"
+    checks:
+    - if: out.events[0].event == "transaction/approve"
+
+  - name: PASS_emergency_transaction_by_GPT-4
+    in:
+      resource:
+        labels:
+          transaction_size: large
+          emergency: "true"
+      actor:
+        labels:
+          model: "GPT-4"
+    checks:
+    - if: out.events[0].event == "transaction/approve"
+    - if: out.events[1].event == "notify/supervisor"
+
+  - name: self_review_from_GPT-3.5-turbo
+    in:
+      resource:
+        labels:
+          transaction_size: small
+      actor:
+        labels:
+          model: 'GPT-3.5-turbo'
+    checks:
+      - if: out.events[0].event == "require/approval"
+      - if: out.events[0].reviewers[0].model == "GPT-4"
+  
+  - name: FAIL_from_GPT-3.5-turbo
+    in:
+      resource:
+        labels:
+          transaction_size: large
+      actor:
+        labels:
+          model: 'GPT-3.5-turbo'
+    checks:
+      - if: out.events[0].event == "transaction/deny"
+      - if: out.events[1].event == "notify/supervisor"

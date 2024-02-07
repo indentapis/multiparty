@@ -7,6 +7,23 @@ Multiparty provides fine-grained, programmatically defined permissions to contro
 This repository serves as a central hub for the GitHub issues, use cases, and bug reports related to Multiparty for easier tracking and communication.
 For additional information, visit [Multiparty.ai](https://multiparty.ai/).
 
+#### Usage
+
+Run test suite:
+
+```
+go test ./pkg/engine.go
+```
+
+Run the simulator:
+
+```
+cd examples/simulator
+npm i
+npm run wasm
+npm run dev
+```
+
 #### Learn more
 
 - [What is it?](https://multiparty.ai/#about)
