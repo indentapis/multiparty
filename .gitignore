@@ -8,7 +8,10 @@ node_modules
 
 # Proto
 api/_proto/**
-**.descriptor.pb
+
+# Proto (usually ignore generated files, except descriptors)
+# 
+# **.descriptor.pb
 
 # NPM
 packages/**/dist
