@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "wasm": "cp ../../static/multiparty.wasm.gz public/static/multiparty.wasm.gz && mkdir -p src/app/testdata && cp ../../pkg/engine/testdata/* src/app/testdata/"
+    "wasm": "cp ../../static/multiparty.js.wasm.gz public/static/multiparty.wasm.gz && mkdir -p src/app/testdata && cp ../../pkg/engine/testdata/* src/app/testdata/"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.0.6",

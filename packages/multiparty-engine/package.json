@@ -1,0 +1,30 @@
+{
+  "name": "@indent/engine",
+  "license": "Apache-2.0",
+  "version": "0.0.1",
+  "scripts": {
+    "clean": "rm -rf out wasm",
+    "wasm": "mkdir -p wasm && cp ../../static/multiparty.js.wasm.gz wasm/multiparty.wasm.gz",
+    "build": "tsc",
+    "build:go": "mkdir -p go && cp $(go env GOROOT)/misc/wasm/wasm_exec.js ./go/wasm_exec.js",
+    "build:browser": "bun build index.browser.ts --outdir ./out",
+    "build:node": "bun build index.node.ts --target node --outdir ./out",
+    "watch": "bun build index.*.ts --outdir ./out --watch"
+  },
+  "files": [
+    "go",
+    "out",
+    "wasm",
+    "README.md",
+    "package.json"
+  ],
+  "devDependencies": {
+    "@types/golang-wasm-exec": "^1.15.2",
+    "@types/node": "^20.11.16",
+    "@types/pako": "^2.0.3",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "pako": "^2.1.0"
+  }
+}
