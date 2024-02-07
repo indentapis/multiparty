@@ -8,7 +8,7 @@
     "isolatedModules": false,
     "skipLibCheck": true,
     "strict": true,
-    "outDir": "out",
+    "outDir": "dist",
     "types": ["node"]
   },
   "include": [
