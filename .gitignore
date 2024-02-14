@@ -4,3 +4,7 @@
 # Proto
 api/_proto/**
 **.descriptor.pb
+
+# Python
+**.egg-info
+**/__pycache__

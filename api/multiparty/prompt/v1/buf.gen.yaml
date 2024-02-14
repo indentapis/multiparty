@@ -1,0 +1,27 @@
+version: v1
+
+managed:
+  enabled: true
+  go_package_prefix:
+    default: multiparty.ai/api/multiparty/prompt/v1
+    except:
+      - buf.build/googleapis/googleapis
+
+plugins:
+  # Go
+  - plugin: buf.build/grpc/go:v1.3.0
+    out: .
+    opt:
+      - paths=source_relative
+  - plugin: go
+    out: .
+    opt:
+      - paths=source_relative
+  # Python
+# TODO: figure out grpc issue
+#  - plugin: buf.build/grpc/python:v1.61.0
+#    out: ../clients/python/api
+  - plugin: buf.build/protocolbuffers/python:v25.2
+    out: ../clients/python/multiparty/api
+  - plugin: buf.build/community/nipunn1313-mypy:v3.5.0
+    out: ../clients/python/multiparty/api

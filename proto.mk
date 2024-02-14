@@ -8,7 +8,8 @@ DEPS_PATHS := $(addprefix $(PROTO)/,$(DEPS))
 BUF := cd $(API) && PATH=$(notdir $(PROTO)):$(notdir $(PROTO))/protoc/bin:$$PATH buf
 
 PKGS := \
-	multiparty/v1
+	multiparty/v1 \
+	multiparty/prompt/v1
 
 proto: $(PKGS)
 

@@ -12,11 +12,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run protogen
         run: make proto
-      - name: Check Protobuf descriptor generation
-        run: |
-          ./scripts/check-change.sh \
-              api/multiparty/v1/v1.descriptor.pb
       - name: Check Go codegen
         run: |
           ./scripts/check-change.sh \
               api/multiparty/v1/*.pb.go
+      - name: Check Python codegen
+        run: |
+          ./scripts/check-change.sh \
+              clients/python/api/multiparty/v1/*.py
