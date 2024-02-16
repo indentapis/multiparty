@@ -19,6 +19,8 @@ package multiparty.prompt.v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
+option go_package = "multiparty.ai/api/prompt/v1;promptv1";
+
 message Meta {
   string space = 1;
   string name = 2;
