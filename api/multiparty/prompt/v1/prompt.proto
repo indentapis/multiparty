@@ -16,31 +16,8 @@ syntax = "proto3";
 
 package multiparty.prompt.v1;
 
-import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
-
-service PromptService {
-  // Create a new prompt.
-  rpc CreatePrompt(CreatePromptRequest) returns (CreatePromptResponse) {
-    option (google.api.http) = {
-      post: "/v1/prompts"
-      body: "*"
-    };
-  }
-  rpc ListPrompts(ListPromptsRequest) returns (ListPromptsResponse) {
-    option (google.api.http) = {get: "/v1/prompts"};
-  }
-  rpc GetPrompt(GetPromptRequest) returns (GetPromptResponse) {
-    option (google.api.http) = {get: "/v1/prompts/{space_name}/{name}"};
-  }
-  rpc CreateReply(CreateReplyRequest) returns (CreateReplyResponse) {
-    option (google.api.http) = {
-      post: "/v1/prompts/{space}/{prompt_name}/replies"
-      body: "*"
-    };
-  }
-}
 
 message Meta {
   string space = 1;
