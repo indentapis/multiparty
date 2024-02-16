@@ -4,6 +4,10 @@ name: buf.build/indent/multiparty
 deps:
   - buf.build/googleapis/googleapis:28151c0d0a1641bf938a7672c500e01d
 
+build:
+  excludes:
+    - _proto
+
 breaking:
   use:
     - FILE
@@ -11,3 +15,8 @@ breaking:
 lint:
   use:
     - DEFAULT
+  ignore_only:
+    ENUM_VALUE_PREFIX:
+      - multiparty/prompt/v1/prompt.proto
+    ENUM_ZERO_VALUE_SUFFIX:
+      - multiparty/prompt/v1/prompt.proto
