@@ -22,6 +22,7 @@ import google.protobuf.internal.containers
 import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
 import google.protobuf.struct_pb2
+import google.protobuf.timestamp_pb2
 import sys
 import typing
 
@@ -31,6 +32,36 @@ else:
     import typing_extensions
 
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
+
+@typing_extensions.final
+class Meta(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    SPACE_FIELD_NUMBER: builtins.int
+    NAME_FIELD_NUMBER: builtins.int
+    DESCRIPTION_FIELD_NUMBER: builtins.int
+    CREATED_FIELD_NUMBER: builtins.int
+    UPDATED_FIELD_NUMBER: builtins.int
+    space: builtins.str
+    name: builtins.str
+    description: builtins.str
+    @property
+    def created(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+    @property
+    def updated(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+    def __init__(
+        self,
+        *,
+        space: builtins.str = ...,
+        name: builtins.str = ...,
+        description: builtins.str = ...,
+        created: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        updated: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["created", b"created", "updated", b"updated"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["created", b"created", "description", b"description", "name", b"name", "space", b"space", "updated", b"updated"]) -> None: ...
+
+global___Meta = Meta
 
 @typing_extensions.final
 class Prompt(google.protobuf.message.Message):
@@ -53,39 +84,112 @@ class Prompt(google.protobuf.message.Message):
     CLOSED: Prompt.Status.ValueType  # 2
     ERROR: Prompt.Status.ValueType  # 3
 
+    META_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
-    FORM_FIELD_NUMBER: builtins.int
     STATUS_FIELD_NUMBER: builtins.int
-    title: builtins.str
-    """multiparty.v1.Meta meta = 1;"""
+    IN_FIELD_NUMBER: builtins.int
+    VALUE_FIELD_NUMBER: builtins.int
+    REPLIES_FIELD_NUMBER: builtins.int
     @property
-    def form(self) -> google.protobuf.struct_pb2.Value: ...
+    def meta(self) -> global___Meta: ...
+    title: builtins.str
     status: global___Prompt.Status.ValueType
-    """multiparty.jsonschema202012.JSONSchema schema = 4;"""
+    @property
+    def value(self) -> google.protobuf.struct_pb2.Value:
+        """jsonSchema = 5;"""
+    @property
+    def replies(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Reply]:
+        """uiSchema = 7;"""
     def __init__(
         self,
         *,
+        meta: global___Meta | None = ...,
         title: builtins.str = ...,
-        form: google.protobuf.struct_pb2.Value | None = ...,
         status: global___Prompt.Status.ValueType = ...,
+        value: google.protobuf.struct_pb2.Value | None = ...,
+        replies: collections.abc.Iterable[global___Reply] | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["form", b"form"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["form", b"form", "status", b"status", "title", b"title"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["in", b"in", "meta", b"meta", "value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["in", b"in", "meta", b"meta", "replies", b"replies", "status", b"status", "title", b"title", "value", b"value"]) -> None: ...
 
 global___Prompt = Prompt
+
+@typing_extensions.final
+class Reply(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    META_FIELD_NUMBER: builtins.int
+    PROMPT_NAME_FIELD_NUMBER: builtins.int
+    CONTENT_FIELD_NUMBER: builtins.int
+    @property
+    def meta(self) -> global___Meta: ...
+    prompt_name: builtins.str
+    @property
+    def content(self) -> google.protobuf.struct_pb2.Value:
+        """content matches the schema of the prompt"""
+    def __init__(
+        self,
+        *,
+        meta: global___Meta | None = ...,
+        prompt_name: builtins.str = ...,
+        content: google.protobuf.struct_pb2.Value | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["content", b"content", "meta", b"meta"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["content", b"content", "meta", b"meta", "prompt_name", b"prompt_name"]) -> None: ...
+
+global___Reply = Reply
+
+@typing_extensions.final
+class CreatePromptRequest(google.protobuf.message.Message):
+    """Prompts"""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    SPACE_FIELD_NUMBER: builtins.int
+    PROMPT_FIELD_NUMBER: builtins.int
+    space: builtins.str
+    @property
+    def prompt(self) -> global___Prompt: ...
+    def __init__(
+        self,
+        *,
+        space: builtins.str = ...,
+        prompt: global___Prompt | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["prompt", b"prompt"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["prompt", b"prompt", "space", b"space"]) -> None: ...
+
+global___CreatePromptRequest = CreatePromptRequest
+
+@typing_extensions.final
+class CreatePromptResponse(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    PROMPT_FIELD_NUMBER: builtins.int
+    @property
+    def prompt(self) -> global___Prompt: ...
+    def __init__(
+        self,
+        *,
+        prompt: global___Prompt | None = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["prompt", b"prompt"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["prompt", b"prompt"]) -> None: ...
+
+global___CreatePromptResponse = CreatePromptResponse
 
 @typing_extensions.final
 class ListPromptsRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    SPACE_FIELD_NUMBER: builtins.int
-    space: builtins.str
+    SPACE_NAME_FIELD_NUMBER: builtins.int
+    space_name: builtins.str
     def __init__(
         self,
         *,
-        space: builtins.str = ...,
+        space_name: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["space", b"space"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["space_name", b"space_name"]) -> None: ...
 
 global___ListPromptsRequest = ListPromptsRequest
 
@@ -109,91 +213,75 @@ global___ListPromptsResponse = ListPromptsResponse
 class GetPromptRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    SPACE_FIELD_NUMBER: builtins.int
+    SPACE_NAME_FIELD_NUMBER: builtins.int
     NAME_FIELD_NUMBER: builtins.int
-    space: builtins.str
+    space_name: builtins.str
     name: builtins.str
     def __init__(
         self,
         *,
-        space: builtins.str = ...,
+        space_name: builtins.str = ...,
         name: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["name", b"name", "space", b"space"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["name", b"name", "space_name", b"space_name"]) -> None: ...
 
 global___GetPromptRequest = GetPromptRequest
 
 @typing_extensions.final
-class Response(google.protobuf.message.Message):
+class GetPromptResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     PROMPT_FIELD_NUMBER: builtins.int
-    CONTENT_FIELD_NUMBER: builtins.int
     @property
-    def prompt(self) -> global___Prompt:
-        """	multiparty.v1.Meta meta = 1;"""
-    @property
-    def content(self) -> google.protobuf.struct_pb2.Value:
-        """content matches prompt schema"""
+    def prompt(self) -> global___Prompt: ...
     def __init__(
         self,
         *,
         prompt: global___Prompt | None = ...,
-        content: google.protobuf.struct_pb2.Value | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["content", b"content", "prompt", b"prompt"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["content", b"content", "prompt", b"prompt"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["prompt", b"prompt"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["prompt", b"prompt"]) -> None: ...
 
-global___Response = Response
+global___GetPromptResponse = GetPromptResponse
 
 @typing_extensions.final
-class ListResponsesRequest(google.protobuf.message.Message):
+class CreateReplyRequest(google.protobuf.message.Message):
+    """Replies"""
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     SPACE_FIELD_NUMBER: builtins.int
     PROMPT_NAME_FIELD_NUMBER: builtins.int
+    REPLY_FIELD_NUMBER: builtins.int
     space: builtins.str
     prompt_name: builtins.str
+    @property
+    def reply(self) -> global___Reply: ...
     def __init__(
         self,
         *,
         space: builtins.str = ...,
         prompt_name: builtins.str = ...,
+        reply: global___Reply | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["prompt_name", b"prompt_name", "space", b"space"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["reply", b"reply"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["prompt_name", b"prompt_name", "reply", b"reply", "space", b"space"]) -> None: ...
 
-global___ListResponsesRequest = ListResponsesRequest
+global___CreateReplyRequest = CreateReplyRequest
 
 @typing_extensions.final
-class ListResponsesResponse(google.protobuf.message.Message):
+class CreateReplyResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    RESPONSES_FIELD_NUMBER: builtins.int
+    REPLY_FIELD_NUMBER: builtins.int
     @property
-    def responses(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Response]: ...
+    def reply(self) -> global___Reply: ...
     def __init__(
         self,
         *,
-        responses: collections.abc.Iterable[global___Response] | None = ...,
+        reply: global___Reply | None = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["responses", b"responses"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["reply", b"reply"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["reply", b"reply"]) -> None: ...
 
-global___ListResponsesResponse = ListResponsesResponse
-
-@typing_extensions.final
-class GetResponseRequest(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    SPACE_FIELD_NUMBER: builtins.int
-    NAME_FIELD_NUMBER: builtins.int
-    space: builtins.str
-    name: builtins.str
-    def __init__(
-        self,
-        *,
-        space: builtins.str = ...,
-        name: builtins.str = ...,
-    ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["name", b"name", "space", b"space"]) -> None: ...
-
-global___GetResponseRequest = GetResponseRequest
+global___CreateReplyResponse = CreateReplyResponse
