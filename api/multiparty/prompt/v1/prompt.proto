@@ -49,13 +49,13 @@ message Prompt {
 message Reply {
   Meta meta = 1;
   string prompt_name = 2;
-  // content matches the schema of the prompt
-  google.protobuf.Value content = 3;
+  // value matches the schema of the prompt
+  google.protobuf.Value value = 3;
 }
 
 // Prompts
 message CreatePromptRequest {
-  string space = 1;
+  string space_name = 1;
   Prompt prompt = 2;
 }
 message CreatePromptResponse {
@@ -77,7 +77,7 @@ message GetPromptResponse {
 
 // Replies
 message CreateReplyRequest {
-  string space = 1;
+  string space_name = 1;
   string prompt_name = 2;
   Reply reply = 3;
 }
