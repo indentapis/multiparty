@@ -29,6 +29,12 @@ message Meta {
   google.protobuf.Timestamp updated = 5;
 }
 
+message Resource {
+  string kind = 1;
+  Meta meta = 2;
+  string email = 3;
+}
+
 message Prompt {
   enum Status {
     UNKNOWN = 0;
@@ -38,19 +44,21 @@ message Prompt {
   }
   Meta meta = 1;
   string title = 2;
-  Status status = 3;
-  google.protobuf.Value in = 4;
-  // jsonSchema = 5;
-  google.protobuf.Value value = 6;
-  // uiSchema = 7;
-  repeated Reply replies = 8;
+  Resource actor = 3;
+  Status status = 4;
+  google.protobuf.Value in = 5;
+  // jsonSchema = 6;
+  google.protobuf.Value value = 7;
+  // uiSchema = 8;
+  repeated Reply replies = 9;
 }
 
 message Reply {
   Meta meta = 1;
   string prompt_name = 2;
+  Resource actor = 3;
   // value matches the schema of the prompt
-  google.protobuf.Value value = 3;
+  google.protobuf.Value value = 4;
 }
 
 // Prompts

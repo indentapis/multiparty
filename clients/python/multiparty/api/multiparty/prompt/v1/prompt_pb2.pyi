@@ -64,6 +64,29 @@ class Meta(google.protobuf.message.Message):
 global___Meta = Meta
 
 @typing_extensions.final
+class Resource(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    KIND_FIELD_NUMBER: builtins.int
+    META_FIELD_NUMBER: builtins.int
+    EMAIL_FIELD_NUMBER: builtins.int
+    kind: builtins.str
+    @property
+    def meta(self) -> global___Meta: ...
+    email: builtins.str
+    def __init__(
+        self,
+        *,
+        kind: builtins.str = ...,
+        meta: global___Meta | None = ...,
+        email: builtins.str = ...,
+    ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["meta", b"meta"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["email", b"email", "kind", b"kind", "meta", b"meta"]) -> None: ...
+
+global___Resource = Resource
+
+@typing_extensions.final
 class Prompt(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -86,6 +109,7 @@ class Prompt(google.protobuf.message.Message):
 
     META_FIELD_NUMBER: builtins.int
     TITLE_FIELD_NUMBER: builtins.int
+    ACTOR_FIELD_NUMBER: builtins.int
     STATUS_FIELD_NUMBER: builtins.int
     IN_FIELD_NUMBER: builtins.int
     VALUE_FIELD_NUMBER: builtins.int
@@ -93,24 +117,27 @@ class Prompt(google.protobuf.message.Message):
     @property
     def meta(self) -> global___Meta: ...
     title: builtins.str
+    @property
+    def actor(self) -> global___Resource: ...
     status: global___Prompt.Status.ValueType
     @property
     def value(self) -> google.protobuf.struct_pb2.Value:
-        """jsonSchema = 5;"""
+        """jsonSchema = 6;"""
     @property
     def replies(self) -> google.protobuf.internal.containers.RepeatedCompositeFieldContainer[global___Reply]:
-        """uiSchema = 7;"""
+        """uiSchema = 8;"""
     def __init__(
         self,
         *,
         meta: global___Meta | None = ...,
         title: builtins.str = ...,
+        actor: global___Resource | None = ...,
         status: global___Prompt.Status.ValueType = ...,
         value: google.protobuf.struct_pb2.Value | None = ...,
         replies: collections.abc.Iterable[global___Reply] | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["in", b"in", "meta", b"meta", "value", b"value"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["in", b"in", "meta", b"meta", "replies", b"replies", "status", b"status", "title", b"title", "value", b"value"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["actor", b"actor", "in", b"in", "meta", b"meta", "value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["actor", b"actor", "in", b"in", "meta", b"meta", "replies", b"replies", "status", b"status", "title", b"title", "value", b"value"]) -> None: ...
 
 global___Prompt = Prompt
 
@@ -120,10 +147,13 @@ class Reply(google.protobuf.message.Message):
 
     META_FIELD_NUMBER: builtins.int
     PROMPT_NAME_FIELD_NUMBER: builtins.int
+    ACTOR_FIELD_NUMBER: builtins.int
     VALUE_FIELD_NUMBER: builtins.int
     @property
     def meta(self) -> global___Meta: ...
     prompt_name: builtins.str
+    @property
+    def actor(self) -> global___Resource: ...
     @property
     def value(self) -> google.protobuf.struct_pb2.Value:
         """value matches the schema of the prompt"""
@@ -132,10 +162,11 @@ class Reply(google.protobuf.message.Message):
         *,
         meta: global___Meta | None = ...,
         prompt_name: builtins.str = ...,
+        actor: global___Resource | None = ...,
         value: google.protobuf.struct_pb2.Value | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["meta", b"meta", "value", b"value"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["meta", b"meta", "prompt_name", b"prompt_name", "value", b"value"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["actor", b"actor", "meta", b"meta", "value", b"value"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["actor", b"actor", "meta", b"meta", "prompt_name", b"prompt_name", "value", b"value"]) -> None: ...
 
 global___Reply = Reply
 
