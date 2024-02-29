@@ -18,22 +18,9 @@ package multiparty.prompt.v1;
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "indent/audit/v1/resources.proto";
 
 option go_package = "multiparty.ai/api/multiparty/prompt/v1;promptv1";
-
-message Meta {
-  string space = 1;
-  string name = 2;
-  string description = 3;
-  google.protobuf.Timestamp created = 4;
-  google.protobuf.Timestamp updated = 5;
-}
-
-message Resource {
-  string kind = 1;
-  Meta meta = 2;
-  string email = 3;
-}
 
 message Prompt {
   enum Status {
@@ -42,9 +29,9 @@ message Prompt {
     CLOSED = 2;
     ERROR = 3;
   }
-  Meta meta = 1;
+  indent.audit.v1.Meta meta = 1;
   string title = 2;
-  Resource actor = 3;
+  indent.audit.v1.Resource actor = 3;
   Status status = 4;
   google.protobuf.Value in = 5;
   // jsonSchema = 6;
@@ -54,9 +41,9 @@ message Prompt {
 }
 
 message Reply {
-  Meta meta = 1;
+  indent.audit.v1.Meta meta = 1;
   string prompt_name = 2;
-  Resource actor = 3;
+  indent.audit.v1.Resource actor = 3;
   // value matches the schema of the prompt
   google.protobuf.Value value = 4;
 }

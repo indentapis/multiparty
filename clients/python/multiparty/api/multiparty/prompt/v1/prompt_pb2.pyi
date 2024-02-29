@@ -23,6 +23,7 @@ import google.protobuf.internal.enum_type_wrapper
 import google.protobuf.message
 import google.protobuf.struct_pb2
 import google.protobuf.timestamp_pb2
+import indent.audit.v1.resources_pb2
 import sys
 import typing
 
@@ -64,29 +65,6 @@ class Meta(google.protobuf.message.Message):
 global___Meta = Meta
 
 @typing_extensions.final
-class Resource(google.protobuf.message.Message):
-    DESCRIPTOR: google.protobuf.descriptor.Descriptor
-
-    KIND_FIELD_NUMBER: builtins.int
-    META_FIELD_NUMBER: builtins.int
-    EMAIL_FIELD_NUMBER: builtins.int
-    kind: builtins.str
-    @property
-    def meta(self) -> global___Meta: ...
-    email: builtins.str
-    def __init__(
-        self,
-        *,
-        kind: builtins.str = ...,
-        meta: global___Meta | None = ...,
-        email: builtins.str = ...,
-    ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["meta", b"meta"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["email", b"email", "kind", b"kind", "meta", b"meta"]) -> None: ...
-
-global___Resource = Resource
-
-@typing_extensions.final
 class Prompt(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -118,7 +96,7 @@ class Prompt(google.protobuf.message.Message):
     def meta(self) -> global___Meta: ...
     title: builtins.str
     @property
-    def actor(self) -> global___Resource: ...
+    def actor(self) -> indent.audit.v1.resources_pb2.Resource: ...
     status: global___Prompt.Status.ValueType
     @property
     def value(self) -> google.protobuf.struct_pb2.Value:
@@ -131,7 +109,7 @@ class Prompt(google.protobuf.message.Message):
         *,
         meta: global___Meta | None = ...,
         title: builtins.str = ...,
-        actor: global___Resource | None = ...,
+        actor: indent.audit.v1.resources_pb2.Resource | None = ...,
         status: global___Prompt.Status.ValueType = ...,
         value: google.protobuf.struct_pb2.Value | None = ...,
         replies: collections.abc.Iterable[global___Reply] | None = ...,
@@ -153,7 +131,7 @@ class Reply(google.protobuf.message.Message):
     def meta(self) -> global___Meta: ...
     prompt_name: builtins.str
     @property
-    def actor(self) -> global___Resource: ...
+    def actor(self) -> indent.audit.v1.resources_pb2.Resource: ...
     @property
     def value(self) -> google.protobuf.struct_pb2.Value:
         """value matches the schema of the prompt"""
@@ -162,7 +140,7 @@ class Reply(google.protobuf.message.Message):
         *,
         meta: global___Meta | None = ...,
         prompt_name: builtins.str = ...,
-        actor: global___Resource | None = ...,
+        actor: indent.audit.v1.resources_pb2.Resource | None = ...,
         value: google.protobuf.struct_pb2.Value | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["actor", b"actor", "meta", b"meta", "value", b"value"]) -> builtins.bool: ...

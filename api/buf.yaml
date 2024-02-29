@@ -3,6 +3,7 @@ name: buf.build/indent/multiparty
 
 deps:
   - buf.build/googleapis/googleapis:28151c0d0a1641bf938a7672c500e01d
+  - buf.build/indent/indent:9c6c01e69e26452a99dc8042ab05f9d4
 
 build:
   excludes:

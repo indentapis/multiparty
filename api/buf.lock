@@ -6,3 +6,8 @@ deps:
     repository: googleapis
     commit: 28151c0d0a1641bf938a7672c500e01d
     digest: shake256:49215edf8ef57f7863004539deff8834cfb2195113f0b890dd1f67815d9353e28e668019165b9d872395871eeafcbab3ccfdb2b5f11734d3cca95be9e8d139de
+  - remote: buf.build
+    owner: indent
+    repository: indent
+    commit: 9c6c01e69e26452a99dc8042ab05f9d4
+    digest: shake256:e2952111970da806a4ac00965bcc4e64a89f330ef41ef303419a6bcefe490a8896467bf5281e5ce2d473282b0e8230cb3c7679ae36e931ec1d21be6759b2bb17
