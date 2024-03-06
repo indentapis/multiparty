@@ -16,12 +16,14 @@ syntax = "proto3";
 
 package multiparty.prompt.v1;
 
+import "multiparty/prompt/v1/prompt.proto";
+
 option go_package = "multiparty.ai/api/multiparty/prompt/v1;promptv1";
 
 // WebPushSubscription is a subscription to a web push-based prompt.
 message WebPushSubscription {
-  // SpaceName is the name of the space to which the subscription belongs.
-  string space_name = 1;
+  // Meta is the metadata for the subscription.
+  multiparty.prompt.v1.Meta meta = 1;
 
   // Endpoint is the URL to which the push message will be sent.
   string endpoint = 2;
