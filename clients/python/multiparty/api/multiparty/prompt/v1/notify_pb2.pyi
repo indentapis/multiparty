@@ -29,18 +29,17 @@ else:
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 @typing_extensions.final
-class WebPushSubscription(google.protobuf.message.Message):
-    """WebPushSubscription is a subscription to a web push-based prompt."""
+class CreateWebPushSubscriptionRequest(google.protobuf.message.Message):
+    """CreateWebPushSubscriptionRequest is a request to create a web push-based prompt subscription."""
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    META_FIELD_NUMBER: builtins.int
+    SPACE_NAME_FIELD_NUMBER: builtins.int
     ENDPOINT_FIELD_NUMBER: builtins.int
     EXPIRATION_TIME_FIELD_NUMBER: builtins.int
     KEYS_FIELD_NUMBER: builtins.int
-    @property
-    def meta(self) -> multiparty.prompt.v1.prompt_pb2.Meta:
-        """Meta is the metadata for the subscription."""
+    space_name: builtins.str
+    """SpaceName is the name of the space in which the prompt is being created."""
     endpoint: builtins.str
     """Endpoint is the URL to which the push message will be sent."""
     expiration_time: builtins.int
@@ -51,13 +50,42 @@ class WebPushSubscription(google.protobuf.message.Message):
     def __init__(
         self,
         *,
-        meta: multiparty.prompt.v1.prompt_pb2.Meta | None = ...,
+        space_name: builtins.str = ...,
         endpoint: builtins.str = ...,
         expiration_time: builtins.int = ...,
         keys: global___WebPushSubscriptionKeys | None = ...,
     ) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["keys", b"keys"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["endpoint", b"endpoint", "expiration_time", b"expiration_time", "keys", b"keys", "space_name", b"space_name"]) -> None: ...
+
+global___CreateWebPushSubscriptionRequest = CreateWebPushSubscriptionRequest
+
+@typing_extensions.final
+class WebPushSubscription(google.protobuf.message.Message):
+    """WebPushSubscription is a subscription to a web push-based prompt."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    META_FIELD_NUMBER: builtins.int
+    ENDPOINT_FIELD_NUMBER: builtins.int
+    KEYS_FIELD_NUMBER: builtins.int
+    @property
+    def meta(self) -> multiparty.prompt.v1.prompt_pb2.Meta:
+        """Meta is the metadata for the subscription."""
+    endpoint: builtins.str
+    """Endpoint is the URL to which the push message will be sent."""
+    @property
+    def keys(self) -> global___WebPushSubscriptionKeys:
+        """Keys are the public keys used to encrypt the push message."""
+    def __init__(
+        self,
+        *,
+        meta: multiparty.prompt.v1.prompt_pb2.Meta | None = ...,
+        endpoint: builtins.str = ...,
+        keys: global___WebPushSubscriptionKeys | None = ...,
+    ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["keys", b"keys", "meta", b"meta"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["endpoint", b"endpoint", "expiration_time", b"expiration_time", "keys", b"keys", "meta", b"meta"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["endpoint", b"endpoint", "keys", b"keys", "meta", b"meta"]) -> None: ...
 
 global___WebPushSubscription = WebPushSubscription
 
