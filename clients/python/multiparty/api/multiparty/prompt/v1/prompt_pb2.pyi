@@ -42,6 +42,7 @@ class Meta(google.protobuf.message.Message):
     DESCRIPTION_FIELD_NUMBER: builtins.int
     CREATED_FIELD_NUMBER: builtins.int
     UPDATED_FIELD_NUMBER: builtins.int
+    EXPIRES_FIELD_NUMBER: builtins.int
     space: builtins.str
     name: builtins.str
     description: builtins.str
@@ -49,6 +50,8 @@ class Meta(google.protobuf.message.Message):
     def created(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     @property
     def updated(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
+    @property
+    def expires(self) -> google.protobuf.timestamp_pb2.Timestamp: ...
     def __init__(
         self,
         *,
@@ -57,9 +60,10 @@ class Meta(google.protobuf.message.Message):
         description: builtins.str = ...,
         created: google.protobuf.timestamp_pb2.Timestamp | None = ...,
         updated: google.protobuf.timestamp_pb2.Timestamp | None = ...,
+        expires: google.protobuf.timestamp_pb2.Timestamp | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["created", b"created", "updated", b"updated"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["created", b"created", "description", b"description", "name", b"name", "space", b"space", "updated", b"updated"]) -> None: ...
+    def HasField(self, field_name: typing_extensions.Literal["created", b"created", "expires", b"expires", "updated", b"updated"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["created", b"created", "description", b"description", "expires", b"expires", "name", b"name", "space", b"space", "updated", b"updated"]) -> None: ...
 
 global___Meta = Meta
 
