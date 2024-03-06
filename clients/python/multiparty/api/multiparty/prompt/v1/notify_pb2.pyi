@@ -33,9 +33,12 @@ class WebPushSubscription(google.protobuf.message.Message):
 
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    SPACE_NAME_FIELD_NUMBER: builtins.int
     ENDPOINT_FIELD_NUMBER: builtins.int
     EXPIRATION_TIME_FIELD_NUMBER: builtins.int
     KEYS_FIELD_NUMBER: builtins.int
+    space_name: builtins.str
+    """SpaceName is the name of the space to which the subscription belongs."""
     endpoint: builtins.str
     """Endpoint is the URL to which the push message will be sent."""
     expiration_time: builtins.int
@@ -46,12 +49,13 @@ class WebPushSubscription(google.protobuf.message.Message):
     def __init__(
         self,
         *,
+        space_name: builtins.str = ...,
         endpoint: builtins.str = ...,
         expiration_time: builtins.int = ...,
         keys: global___WebPushSubscriptionKeys | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["keys", b"keys"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["endpoint", b"endpoint", "expiration_time", b"expiration_time", "keys", b"keys"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["endpoint", b"endpoint", "expiration_time", b"expiration_time", "keys", b"keys", "space_name", b"space_name"]) -> None: ...
 
 global___WebPushSubscription = WebPushSubscription
 

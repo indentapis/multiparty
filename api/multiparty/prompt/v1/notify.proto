@@ -20,14 +20,17 @@ option go_package = "multiparty.ai/api/multiparty/prompt/v1;promptv1";
 
 // WebPushSubscription is a subscription to a web push-based prompt.
 message WebPushSubscription {
+  // SpaceName is the name of the space to which the subscription belongs.
+  string space_name = 1;
+
   // Endpoint is the URL to which the push message will be sent.
-  string endpoint = 1;
+  string endpoint = 2;
 
   // ExpirationTime is the time at which the subscription will expire.
-  uint64 expiration_time = 2;
+  uint64 expiration_time = 3;
 
   // Keys are the public keys used to encrypt the push message.
-  WebPushSubscriptionKeys keys = 3;
+  WebPushSubscriptionKeys keys = 4;
 }
 
 // WebPushSubscriptionKeys are the public keys used to encrypt the push message.
