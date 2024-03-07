@@ -110,3 +110,39 @@ class WebPushSubscriptionKeys(google.protobuf.message.Message):
     def ClearField(self, field_name: typing_extensions.Literal["auth", b"auth", "p256dh", b"p256dh"]) -> None: ...
 
 global___WebPushSubscriptionKeys = WebPushSubscriptionKeys
+
+@typing_extensions.final
+class GetSubscribeOptionsRequest(google.protobuf.message.Message):
+    """GetSubscribeOptionsRequest is a request to get the options for subscribing."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    SPACE_NAME_FIELD_NUMBER: builtins.int
+    space_name: builtins.str
+    """SpaceName is the name being subscribed to."""
+    def __init__(
+        self,
+        *,
+        space_name: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["space_name", b"space_name"]) -> None: ...
+
+global___GetSubscribeOptionsRequest = GetSubscribeOptionsRequest
+
+@typing_extensions.final
+class SubscribeOptions(google.protobuf.message.Message):
+    """SubscribeOptions are options for subscribing."""
+
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    APPLICATION_SERVER_KEY_FIELD_NUMBER: builtins.int
+    application_server_key: builtins.str
+    """ApplicationServerKey is the ECDSA P-256 public key that the push server will use to authenticate your server."""
+    def __init__(
+        self,
+        *,
+        application_server_key: builtins.str = ...,
+    ) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["application_server_key", b"application_server_key"]) -> None: ...
+
+global___SubscribeOptions = SubscribeOptions

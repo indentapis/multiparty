@@ -56,3 +56,15 @@ message WebPushSubscriptionKeys {
   // Auth is the authentication secret used to encrypt the push message.
   string auth = 2;
 }
+
+// GetSubscribeOptionsRequest is a request to get the options for subscribing.
+message GetSubscribeOptionsRequest {
+  // SpaceName is the name being subscribed to.
+  string space_name = 1;
+}
+
+// SubscribeOptions are options for subscribing.
+message SubscribeOptions {
+  // ApplicationServerKey is the ECDSA P-256 public key that the push server will use to authenticate your server.
+  string application_server_key = 1;
+}
