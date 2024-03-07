@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - policy-sim
 jobs:
   protogen:
     name: protogen
@@ -19,4 +20,4 @@ jobs:
       - name: Check Python codegen
         run: |
           ./scripts/check-change.sh \
-              clients/python/api/multiparty/v1/*.py
+              clients/python/multiparty/api/multiparty/prompt/v1/*.py
